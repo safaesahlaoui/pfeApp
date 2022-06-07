@@ -134,7 +134,7 @@ const Home = ({ getHoldings, getCoinMarket, myHoldings, coins }) => {
                   alignItems: "center",
                   justifyContent: "center",
                 }}
-                onPress={() => setSelectedCoin9(item)}
+                onPress={() => setSelectedCoin(item)}
               >
                 {/* Logo */}
                 <View style={{ width: 25 }}>
