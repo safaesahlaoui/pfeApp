@@ -4,10 +4,23 @@ import { BalanceInfo } from "../components";
 import IconTextButton from "../components/iconTextButton";
 import MainLayout from "./MainLayout";
 import { connect } from "react-redux";
+import {
+  VictoryScatter,
+  VictoryLine,
+  VictoryChart,
+  VictoryAxis,
+} from "victory-native";
 import marketReducer from "../stores/market/marketReducer";
 import { getHoldings, getCoinMarket } from "../stores/market/marketAction";
 //import { holdings } from '../constants/dummy';
-import { COLORS, FONTS, SIZES, dummyData, icons } from "../constants";
+import {
+  COLORS,
+  FONTS,
+  SIZES,
+  dummyData,
+  icons,
+  VictoryCustomTheme,
+} from "../constants";
 import { Chart } from "../components";
 import { useFocusEffect } from "@react-navigation/native";
 import { FlatList } from "react-native-gesture-handler";
@@ -85,6 +98,86 @@ const Home = ({ getHoldings, getCoinMarket, myHoldings, coins }) => {
       </View>
     );
   }
+  function renderChart() {
+    return (
+      <View
+        style={{
+          marginTop: SIZES.padding,
+          marginHorizontal: SIZES.radius,
+          alignItems: "center",
+          borderRadius: SIZES.radius,
+          borderColor: COLORS.white,
+        }}
+      >
+        {/* Header */}
+        {/*  Chart */}
+        <View
+          style={{
+            marginTop: -25,
+          }}
+        >
+          <VictoryChart
+            theme={VictoryCustomTheme}
+            height={220}
+            width={SIZES.width - 40}
+          >
+            <VictoryLine
+              style={{
+                data: {
+                  stroke: COLORS.chartColor,
+                },
+                parent: {
+                  border: "1px solid #ccc",
+                },
+              }}
+              data={
+                selectedCoin
+                  ? selectedCoin?.sparkline_in_7d?.price
+                  : coins[0]?.sparkline_in_7d.price
+              }
+              categories={{
+                x: ["15 MIN", "30 MIN", "45 MIN", "60 MIN"],
+                y: ["15", "30", "45", "60"],
+              }}
+            ></VictoryLine>
+            <VictoryScatter
+              data={
+                selectedCoin
+                  ? selectedCoin?.sparkline_in_7d?.price
+                  : coins[0]?.sparkline_in_7d.price
+              }
+              size={2}
+              style={{
+                data: {
+                  fill: COLORS.secondary,
+                },
+              }}
+            />
+            <VictoryAxis
+              style={{
+                grid: {
+                  stroke: COLORS.chartColor,
+                },
+              }}
+            />
+            <VictoryAxis
+              dependentAxis
+              style={{
+                axis: {
+                  stroke: COLORS.white,
+                },
+                grid: {
+                  stroke: "grey",
+                },
+              }}
+            />
+          </VictoryChart>
+        </View>
+        {/* Options */}
+        {/* Dots */}
+      </View>
+    );
+  }
 
   return (
     <MainLayout>
@@ -98,6 +191,7 @@ const Home = ({ getHoldings, getCoinMarket, myHoldings, coins }) => {
         {renderWalletInfoSection()}
         {/*  Chart */}
         <Chart />
+        {renderChart()}
         {/*  top Crypto */}
         <FlatList
           data={coins}
@@ -134,7 +228,7 @@ const Home = ({ getHoldings, getCoinMarket, myHoldings, coins }) => {
                   alignItems: "center",
                   justifyContent: "center",
                 }}
-                onPress={() => setSelectedCoin9(item)}
+                onPress={() => setSelectedCoin(item)}
               >
                 {/* Logo */}
                 <View style={{ width: 25 }}>

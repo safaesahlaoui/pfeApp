@@ -1,4 +1,5 @@
 import React from "react";
+
 import { View, Text } from "react-native";
 import { COLORS, FONTS, SIZES } from "../constants";
 const HeaderBar = ({ title }) => {

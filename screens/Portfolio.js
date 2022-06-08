@@ -5,7 +5,20 @@ import { useFocusEffect } from "@react-navigation/native";
 import { getHoldings } from "../stores/market/marketAction";
 import { BalanceInfo } from "../components";
 import { Chart } from "../components";
-import { COLORS, FONTS, SIZES, dummyData, icons } from "../constants";
+import {
+  VictoryScatter,
+  VictoryLine,
+  VictoryChart,
+  VictoryAxis,
+} from "victory-native";
+import {
+  COLORS,
+  FONTS,
+  SIZES,
+  dummyData,
+  icons,
+  VictoryCustomTheme,
+} from "../constants";
 import MainLayout from "./MainLayout";
 const Portfolio = ({ getHoldings, myHoldings }) => {
   const [selectedCoin, setSelectedCoin] = React.useState(null);
@@ -21,6 +34,82 @@ const Portfolio = ({ getHoldings, myHoldings }) => {
     0
   );
   let perChenge = (valueChange / (totalWallet - valueChange)) * 100;
+  function renderChart() {
+    return (
+      <View
+        style={{
+          marginTop: SIZES.padding,
+          marginHorizontal: SIZES.radius,
+          alignItems: "center",
+          borderRadius: SIZES.radius,
+          borderColor: COLORS.white,
+        }}
+      >
+        {/* Header */}
+        {/*  Chart */}
+        <View
+          style={{
+            marginTop: -25,
+          }}
+        >
+          <VictoryChart
+            theme={VictoryCustomTheme}
+            height={220}
+            width={SIZES.width - 40}
+          >
+            <VictoryLine
+              style={{
+                data: {
+                  stroke: COLORS.bg,
+                },
+                parent: {
+                  border: "1px solid #ccc",
+                },
+              }}
+              data={
+                selectedCoin
+                  ? selectedCoin?.sparkline_in_7d?.value
+                  : myHoldings[0]?.sparkline_in_7d.value
+              }
+              categories={{
+                x: ["15 MIN", "30 MIN", "45 MIN", "60 MIN"],
+                y: ["15", "30", "45", "60"],
+              }}
+            ></VictoryLine>
+            <VictoryScatter
+              data={myHoldings[0]?.sparkline_in_7d?.value}
+              size={2}
+              style={{
+                data: {
+                  fill: COLORS.secondary,
+                },
+              }}
+            />
+            <VictoryAxis
+              style={{
+                grid: {
+                  stroke: COLORS.transparentBlack,
+                },
+              }}
+            />
+            <VictoryAxis
+              dependentAxis
+              style={{
+                axis: {
+                  stroke: COLORS.white,
+                },
+                grid: {
+                  stroke: "grey",
+                },
+              }}
+            />
+          </VictoryChart>
+        </View>
+        {/* Options */}
+        {/* Dots */}
+      </View>
+    );
+  }
 
   function renderCurrentBalanceSection() {
     return (
@@ -64,16 +153,7 @@ const Portfolio = ({ getHoldings, myHoldings }) => {
         {/* Header - Current balance */}
         {renderCurrentBalanceSection()}
         {/* Chart */}
-        <Chart
-          containerStyle={{
-            marginTop: SIZES.radius,
-          }}
-          chartPrices={
-            selectedCoin
-              ? selectedCoin?.sparkline_in_7d?.value
-              : myHoldings[0]?.sparkline_in_7d?.value
-          }
-        />
+        {renderChart()}
         {/* Assets */}
         <FlatList
           data={myHoldings}
@@ -142,7 +222,7 @@ const Portfolio = ({ getHoldings, myHoldings }) => {
                   flexDirection: "row",
                   height: 55,
                 }}
-                onPress={() => selectedCoin(item)}
+                onPress={() => setSelectedCoin(item)}
               >
                 {/* Asset */}
                 <View

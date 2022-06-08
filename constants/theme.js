@@ -4,6 +4,7 @@ const { width, height } = Dimensions.get("window");
 export const COLORS = {
   primary: "#1E1E1E",
   secondary: "#3B3B3B",
+  chartColor: "#4defd8",
   balance: "#5861b0",
   bg: "#5c53a6",
   background: "#0f073a",
