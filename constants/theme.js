@@ -2,6 +2,7 @@ import { Dimensions } from "react-native";
 const { width, height } = Dimensions.get("window");
 
 export const COLORS = {
+  //associer le code couleur name
   primary: "#1E1E1E",
   secondary: "#3B3B3B",
   chartColor: "#4defd8",
