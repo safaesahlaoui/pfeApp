@@ -20,6 +20,7 @@ import {
   VictoryCustomTheme,
 } from "../constants";
 import MainLayout from "./MainLayout";
+import { LinearGradient } from "expo-linear-gradient";
 const Portfolio = ({ getHoldings, myHoldings }) => {
   const [selectedCoin, setSelectedCoin] = React.useState(null);
   useFocusEffect(
@@ -113,33 +114,56 @@ const Portfolio = ({ getHoldings, myHoldings }) => {
 
   function renderCurrentBalanceSection() {
     return (
-      <View
+      <LinearGradient
+        colors={["#4c83c3", "#623f9b"]}
+        start={{ x: 0, y: 0.8 }}
+        end={{ x: 1, y: 1 }}
         style={{
-          paddingHorizontal: SIZES.padding,
           borderBottomLeftRadius: 40,
           borderBottomRightRadius: 40,
-          backgroundColor: COLORS.tabbg,
+          height: 200,
         }}
       >
-        <Text
+        <View
           style={{
-            marginTop: 50,
-            color: COLORS.white,
-            ...FONTS.largeTitle,
+            paddingHorizontal: SIZES.padding,
+            borderBottomLeftRadius: 55,
+
+            width: "100%",
+            marginTop: -20,
+            paddingEnd: -35,
+            height: 240,
+
+            borderBottomRightRadius: 40,
           }}
         >
-          Portfolio
-        </Text>
-        <BalanceInfo
-          title=""
-          displayAmount={final}
-          changePct={perChenge}
-          containerStyle={{
-            marginTop: SIZES.radius,
-            marginBottom: SIZES.padding,
-          }}
-        />
-      </View>
+          <Text
+            style={{
+              marginTop: 50,
+              color: COLORS.white,
+              ...FONTS.largeTitle,
+              paddingTop: 9,
+              marginBottom: -15,
+              paddingBottom: -15,
+            }}
+          >
+            Portfolio
+          </Text>
+
+          <BalanceInfo
+            title=""
+            displayAmount={final}
+            changePct={perChenge}
+            containerStyle={{
+              marginTop: -15,
+              marginBottom: 0 - 13,
+              borderBottomLeftRadius: 45,
+
+              borderBottomRightRadius: 45,
+            }}
+          />
+        </View>
+      </LinearGradient>
     );
   }
   return (
@@ -151,7 +175,9 @@ const Portfolio = ({ getHoldings, myHoldings }) => {
         }}
       >
         {/* Header - Current balance */}
+
         {renderCurrentBalanceSection()}
+
         {/* Chart */}
         {renderChart()}
         {/* Assets */}
@@ -310,12 +336,15 @@ const Portfolio = ({ getHoldings, myHoldings }) => {
                   <Text
                     style={{
                       textAlign: "right",
-                      color: COLORS.black,
+                      color: COLORS.white,
                       ...FONTS.h4,
                       lineHeight: 15,
                     }}
                   >
-                    ${item.total.toFixed(2)}
+                    $
+                    {item.total.toLocaleString(undefined, {
+                      maximumFractionDigits: 2,
+                    })}
                   </Text>
                   <Text
                     style={{

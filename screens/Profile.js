@@ -10,6 +10,7 @@ import {
 import { COLORS, FONTS, SIZES, icons, dummyData } from "../constants";
 import MainLayout from "./MainLayout";
 import HeaderBar from "../components/HeaderBar";
+import { LinearGradient } from "expo-linear-gradient";
 const SectionTitle = ({ title }) => {
   return (
     <View

@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, Image } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { SIZES, COLORS, FONTS, icons } from "../constants";
 const BalanceInfo = ({ title, displayAmount, changePct, containerStyle }) => {
   return (

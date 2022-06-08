@@ -12,6 +12,7 @@ import {
 } from "victory-native";
 import marketReducer from "../stores/market/marketReducer";
 import { getHoldings, getCoinMarket } from "../stores/market/marketAction";
+import {} from "expo-linear-gradient";
 //import { holdings } from '../constants/dummy';
 import {
   COLORS,
@@ -25,6 +26,7 @@ import { Chart } from "../components";
 import { useFocusEffect } from "@react-navigation/native";
 import { FlatList } from "react-native-gesture-handler";
 import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
+import { LinearGradient } from "expo-linear-gradient";
 const Home = ({ getHoldings, getCoinMarket, myHoldings, coins }) => {
   const [selectedCoin, setSelectedCoin] = React.useState(null);
   useFocusEffect(
@@ -43,59 +45,69 @@ const Home = ({ getHoldings, getCoinMarket, myHoldings, coins }) => {
 
   function renderWalletInfoSection() {
     return (
-      <View
+      <LinearGradient
+        colors={["#4c83c3", "#623f9b"]}
+        start={{ x: 0, y: 0.8 }}
+        end={{ x: 1, y: 1 }}
         style={{
-          backgroundColor: COLORS.tabbg,
-          height: "25%",
-          paddingHorizontal: SIZES.padding,
-          borderBottomLeftRadius: 40,
-          borderBottomRightRadius: 40,
+          borderBottomLeftRadius: 60,
+          borderBottomRightRadius: 60,
+          height: 200,
         }}
       >
-        {/* Balance info */}
-        <BalanceInfo
-          title="Your Wallet"
-          displayAmount={final}
-          changePct={perChenge}
-          containerStyle={{
-            marginTop: 50,
-          }}
-        ></BalanceInfo>
-        {/*    Button  */}
         <View
           style={{
-            flexDirection: "row",
-            marginTop: 20,
-            marginBottom: -10,
-            paddingHorizontal: SIZES.radius,
+            height: 250,
+            paddingHorizontal: SIZES.padding,
+            borderBottomLeftRadius: 40,
+            borderBottomRightRadius: 40,
           }}
         >
-          <IconTextButton
-            label="Sell"
-            icon={icons.send}
+          {/* Balance info */}
+          <BalanceInfo
+            title="Your Wallet"
+            displayAmount={final}
+            changePct={perChenge}
             containerStyle={{
-              flex: 1,
-              height: 40,
-              color: COLORS.white,
-
-              backgroundColor: COLORS.tradecolor,
-              marginRight: SIZES.radius,
+              marginTop: 50,
             }}
-            onPress={() => console.log("transfer")}
-          />
-          <IconTextButton
-            label="Buy"
-            icon={icons.withdraw}
-            containerStyle={{
-              flex: 1,
-              height: 40,
-
-              backgroundColor: COLORS.tradecolor,
+          ></BalanceInfo>
+          {/*    Button  */}
+          <View
+            style={{
+              flexDirection: "row",
+              marginTop: 20,
+              marginBottom: -10,
+              paddingHorizontal: SIZES.radius,
             }}
-            onPress={() => console.log("Withdraw")}
-          />
+          >
+            <IconTextButton
+              label="Sell"
+              icon={icons.send}
+              containerStyle={{
+                flex: 1,
+                height: 40,
+                color: COLORS.white,
+
+                backgroundColor: COLORS.tradecolor,
+                marginRight: SIZES.radius,
+              }}
+              onPress={() => console.log("transfer")}
+            />
+            <IconTextButton
+              label="Buy"
+              icon={icons.withdraw}
+              containerStyle={{
+                flex: 1,
+                height: 40,
+
+                backgroundColor: COLORS.tradecolor,
+              }}
+              onPress={() => console.log("Withdraw")}
+            />
+          </View>
         </View>
-      </View>
+      </LinearGradient>
     );
   }
   function renderChart() {
@@ -107,6 +119,7 @@ const Home = ({ getHoldings, getCoinMarket, myHoldings, coins }) => {
           alignItems: "center",
           borderRadius: SIZES.radius,
           borderColor: COLORS.white,
+          height: 200,
         }}
       >
         {/* Header */}
@@ -190,7 +203,7 @@ const Home = ({ getHoldings, getCoinMarket, myHoldings, coins }) => {
         {/*  Header -Walet info */}
         {renderWalletInfoSection()}
         {/*  Chart */}
-        <Chart />
+        {/*   <Chart /> */}
         {renderChart()}
         {/*  top Crypto */}
         <FlatList

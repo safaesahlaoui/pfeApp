@@ -3,6 +3,7 @@ import { View, Animated } from "react-native";
 import { COLORS, SIZES, icons } from "../constants";
 //import IconTextButton from '../components/iconTextButton';
 import * as redux from "redux";
+import { LinearGradient } from "expo-linear-gradient";
 import IconTextButton from "../components/iconTextButton";
 import { connect } from "react-redux";
 
